@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Large data files
+data/Fake.csv
+data/True.csv
+data/cleaned_data.csv
+data/sentiment_data.csv
+
+# Model files
+models/*.pkl
+
+# Environment
+.env
+venv/
