@@ -141,7 +141,6 @@ streamlit run app.py
 | Keywords | 40% | Fake/Real word detection |
 | Style | 20% | Writing style patterns |
 ```
-
 ---
 
 ## ⚠️ Limitations
