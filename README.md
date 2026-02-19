@@ -160,15 +160,5 @@ streamlit run app.py
 
 ---
 
-## 👤 Author
-- **Name:** Chinmoyee Ghosh, Ankita Mandal, Diya Laskar, Asmita Mondal, Ayushi Singh
-- **College:** KIIT University
-- **Semester:** 8th Semester
-
----
-
 ## 📄 License
 MIT License
-```
-
----
