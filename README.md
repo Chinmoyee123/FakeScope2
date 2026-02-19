@@ -140,7 +140,7 @@ streamlit run app.py
 | Sentiment | 15% | Polarity + Subjectivity |
 | Keywords | 40% | Fake/Real word detection |
 | Style | 20% | Writing style patterns |
-```
+
 ---
 
 ## ⚠️ Limitations
