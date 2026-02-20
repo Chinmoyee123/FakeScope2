@@ -47,7 +47,31 @@ FAKE_KEYWORDS = [
     "share before", "delete this",
     "proven that", "single person proved",
     "one scientist", "village scientist",
-    "one tweet proves"
+    "one tweet proves",
+    
+     # Misleading scientific claims
+    "ayurvedic doctor", "traditional medicine in space",
+    "selects indian", "alternative medicine nasa",
+    "nasa selects", "explore role",
+    "homeopathy in space", "spiritual healing",
+    "ancient remedy", "traditional healer",
+    "witch doctor", "herbal cure in space",
+    "yoga cures cancer", "meditation cures",
+    "ayurveda cures", "natural healing space",
+
+    # Fake authority claims
+    "nasa confirms flat", "nasa admits",
+    "nasa hides", "nasa secret",
+    "who admits", "cdc admits",
+    "government admits", "scientists admit",
+    "experts admit", "doctor admits",
+    "professor admits", "researcher admits",
+
+    # Implausible combinations
+    "village doctor nasa", "local scientist nasa",
+    "indian doctor space", "traditional doctor space",
+    "spiritual advisor nasa", "astrologer confirms",
+    "psychic predicts", "fortune teller"
 ]
 
 # Real news indicator words

@@ -18,6 +18,10 @@ fake news with high accuracy.
 
 ## 🚀 Features
 - ✅ Hybrid Detection System (4 components)
+- ✅ Text based fake news detection
+- ✅ Image/Screenshot based fake news detection
+- ✅ OCR text extraction from news screenshots
+- ✅ Implausibility detection system
 - ✅ Explains WHY news is fake or real
 - ✅ Sentiment Analysis (Polarity + Subjectivity)
 - ✅ Keyword Detection System
@@ -33,6 +37,8 @@ fake news with high accuracy.
 - **Framework:** Streamlit
 - **ML:** Scikit-learn, XGBoost
 - **NLP:** NLTK, TextBlob
+- **OCR:** Tesseract, Pytesseract
+- **Image Processing:** Pillow
 - **Visualization:** Plotly
 - **Dataset:** Bisaillon Fake News Dataset
 
@@ -94,9 +100,10 @@ FakeScope2/
 │   └── tfidf_vectorizer.pkl← Saved TF-IDF
 │
 └── utils/
-    ├── keywords.py         ← Keyword rules
-    ├── sentiment_analyzer.py← Sentiment analysis
-    └── style_analyzer.py   ← Style analysis
+    ├── keywords.py           ← Keyword rules
+    ├── sentiment_analyzer.py ← Sentiment analysis
+    ├── style_analyzer.py     ← Style + implausibility
+    └── image_analyzer.py     ← OCR image analysis
 ```
 
 ---
@@ -114,18 +121,24 @@ cd FakeScope2
 pip install -r requirements.txt
 ```
 
-### 3. Download Dataset
+### 3. Install Tesseract OCR
+Download from:
+https://github.com/UB-Mannheim/tesseract/wiki
+Install with default settings
+
+
+### 4. Download Dataset
 Download Fake.csv and True.csv from:
 https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset
 Place them in the data/ folder
 
-### 4. Preprocess and Train
+### 5. Preprocess and Train
 ```bash
 python preprocess.py
 python train_model.py
 ```
 
-### 5. Run the App
+### 6. Run the App
 ```bash
 streamlit run app.py
 ```

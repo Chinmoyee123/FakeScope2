@@ -10,3 +10,5 @@ plotly
 xgboost
 joblib
 scipy
+pytesseract
+Pillow

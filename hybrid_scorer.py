@@ -1,5 +1,6 @@
 from utils.keywords import get_keyword_score
-from utils.style_analyzer import analyze_writing_style
+from utils.style_analyzer import (analyze_writing_style,
+                                   check_implausibility)
 from utils.sentiment_analyzer import analyze_sentiment
 import joblib
 import re
@@ -43,9 +44,9 @@ def analyze_news(text):
     sentiment_results = analyze_sentiment(text)
     keyword_results = get_keyword_score(text)
     style_results = analyze_writing_style(text)
+    implausibility_results = check_implausibility(text)
 
     # Hybrid score calculation
-    # Weights for each component
     ml_weight = 0.25
     sentiment_weight = 0.15
     keyword_weight = 0.40
@@ -58,6 +59,13 @@ def analyze_news(text):
         keyword_results["keyword_score"] * keyword_weight +
         style_results["style_score"] * style_weight
     )
+
+    # Apply implausibility penalty
+    if implausibility_results["implausibility_score"] > 0:
+        hybrid_score = hybrid_score - (
+            implausibility_results["implausibility_score"] * 0.5
+        )
+        hybrid_score = max(0, hybrid_score)
 
     hybrid_score = round(hybrid_score, 2)
 
@@ -113,6 +121,13 @@ def analyze_news(text):
             f"({style_results['num_words']} words) — "
             f"real news tends to be detailed"
         )
+        
+    if implausibility_results["implausible_found"]:
+        explanation.append(
+            f"⚠️ Implausible combination detected: "
+            f"{', '.join(implausibility_results['implausible_found'])}"
+            f" — this combination is highly unlikely to be real"
+        )    
 
     if not explanation:
         if prediction == "REAL":

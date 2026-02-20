@@ -101,3 +101,54 @@ def analyze_writing_style(text):
         "url_count": url_count,
         "caps_words": caps_words[:5]
     }
+def check_implausibility(text):
+    """
+    Check for implausible combinations of words
+    that suggest fake news
+    """
+    text_lower = text.lower()
+
+    # Implausible combinations
+    implausible_pairs = [
+        # Science + pseudoscience
+        ("nasa", "ayurvedic"),
+        ("nasa", "traditional medicine"),
+        ("nasa", "astrology"),
+        ("nasa", "spiritual"),
+        ("nasa", "homeopathy"),
+        ("space", "ayurvedic"),
+        ("space", "witch"),
+        ("scientist", "miracle"),
+        ("doctor", "miracle cure"),
+        ("government", "secretly"),
+        ("bank", "shutdown"),
+        ("vaccine", "microchip"),
+        ("5g", "covid"),
+        ("bill gates", "microchip"),
+        ("bill gates", "vaccine"),
+        ("chemtrails", "government"),
+        ("flat earth", "nasa"),
+        ("nasa", "hiding"),
+        ("moon", "staged"),
+        ("moon", "fake"),
+        # Authority + impossible claim
+        ("president", "alien"),
+        ("government", "alien"),
+        ("nasa", "alien confirmed"),
+        ("who", "hiding cure"),
+        ("cdc", "hiding"),
+    ]
+
+    implausibility_score = 0
+    implausible_found = []
+
+    for pair in implausible_pairs:
+        if pair[0] in text_lower and pair[1] in text_lower:
+            implausibility_score += 30
+            implausible_found.append(f"{pair[0]} + {pair[1]}")
+
+    return {
+        "implausibility_score": min(implausibility_score, 100),
+        "implausible_found": implausible_found
+    }    
+    

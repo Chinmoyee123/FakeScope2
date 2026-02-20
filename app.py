@@ -1,3 +1,5 @@
+from PIL import Image
+from utils.image_analyzer import extract_text_from_image, is_valid_extraction
 import streamlit as st
 import pandas as pd
 import plotly.graph_objects as go
@@ -61,6 +63,7 @@ st.sidebar.markdown("---")
 page = st.sidebar.radio("Navigate", [
     "🏠 Home",
     "🔎 Analyze News",
+    "🖼️ Analyze Image",
     "📊 Model Results",
     "📖 How It Works",
     "👥 About"
@@ -333,6 +336,197 @@ elif page == "🔎 Analyze News":
                       else "None found ⚠️")
                 )
 
+# ===== IMAGE ANALYSIS PAGE =====
+elif page == "🖼️ Analyze Image":
+    st.title("🖼️ Analyze News Screenshot")
+    st.markdown("---")
+
+    st.markdown("""
+    ### How it works
+    - Upload a **screenshot of any news article**
+    - Our OCR system will **extract the text**
+    - Text will be analyzed using our **Hybrid Detection System**
+    - You will get **Real/Fake prediction** with explanation
+    """)
+
+    st.markdown("---")
+
+    # File uploader
+    uploaded_file = st.file_uploader(
+        "Upload News Screenshot",
+        type=["png", "jpg", "jpeg"],
+        help="Upload a screenshot of a news article"
+    )
+
+    if uploaded_file is not None:
+        # Show uploaded image
+        image = Image.open(uploaded_file)
+        st.image(
+            image,
+            caption="Uploaded Image",
+            width=700
+        )
+
+        if st.button("🔍 ANALYZE IMAGE", use_container_width=True):
+            with st.spinner("Extracting text from image..."):
+                extracted_text = extract_text_from_image(image)
+
+            st.markdown("---")
+            st.subheader("📝 Extracted Text")
+
+            if not is_valid_extraction(extracted_text):
+                st.error("""
+                Could not extract enough text from image.
+                Please try:
+                - A clearer image
+                - Higher resolution screenshot
+                - Image with more visible text
+                """)
+            else:
+                # Show extracted text
+                st.text_area(
+                    "Text extracted from image:",
+                    extracted_text,
+                    height=150
+                )
+
+                st.markdown("---")
+
+                # Analyze extracted text
+                with st.spinner(
+                    "Analyzing extracted text..."
+                ):
+                    results = analyze_news(extracted_text)
+
+                # Show results
+                if results["prediction"] == "REAL":
+                    st.markdown(
+                        f'<div class="real-box">'
+                        f'✅ REAL NEWS — '
+                        f'Confidence: {results["confidence"]}%'
+                        f'</div>',
+                        unsafe_allow_html=True
+                    )
+                else:
+                    st.markdown(
+                        f'<div class="fake-box">'
+                        f'❌ FAKE NEWS — '
+                        f'Confidence: {results["confidence"]}%'
+                        f'</div>',
+                        unsafe_allow_html=True
+                    )
+
+                st.markdown("---")
+
+                # Score breakdown
+                st.subheader("📊 Score Breakdown")
+                col1, col2, col3, col4 = st.columns(4)
+
+                with col1:
+                    st.metric(
+                        "🤖 ML Score",
+                        f"{results['ml_score']}%"
+                    )
+                with col2:
+                    st.metric(
+                        "💬 Sentiment Score",
+                        f"{results['sentiment_score']}%"
+                    )
+                with col3:
+                    st.metric(
+                        "🔑 Keyword Score",
+                        f"{results['keyword_score']}%"
+                    )
+                with col4:
+                    st.metric(
+                        "✍️ Style Score",
+                        f"{results['style_score']}%"
+                    )
+
+                st.markdown("---")
+
+                # Gauge chart
+                import plotly.graph_objects as go
+                fig = go.Figure(go.Indicator(
+                    mode="gauge+number",
+                    value=results["hybrid_score"],
+                    title={"text": "Hybrid Score (>50 = Real)"},
+                    gauge={
+                        "axis": {"range": [0, 100]},
+                        "bar": {
+                            "color": "green"
+                            if results["prediction"] == "REAL"
+                            else "red"
+                        },
+                        "steps": [
+                            {"range": [0, 50],
+                             "color": "#ffcccc"},
+                            {"range": [50, 100],
+                             "color": "#ccffcc"}
+                        ],
+                        "threshold": {
+                            "line": {
+                                "color": "black",
+                                "width": 4
+                            },
+                            "thickness": 0.75,
+                            "value": 50
+                        }
+                    }
+                ))
+                st.plotly_chart(fig, use_container_width=True)
+
+                st.markdown("---")
+
+                # Explanation
+                st.subheader("🔍 Why This Result?")
+                for exp in results["explanation"]:
+                    st.markdown(f"- {exp}")
+
+                st.markdown("---")
+
+                # Keywords found
+                st.subheader("🔑 Keywords Found")
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.error(
+                        f"⚠️ Suspicious Words: "
+                        f"{results['keywords']['fake_count']}\n\n"
+                        + (", ".join(
+                            results['keywords']['fake_keywords_found']
+                        ) if results['keywords']['fake_keywords_found']
+                          else "None found ✅")
+                    )
+                with col2:
+                    st.success(
+                        f"✅ Credible Words: "
+                        f"{results['keywords']['real_count']}\n\n"
+                        + (", ".join(
+                            results['keywords']['real_keywords_found']
+                        ) if results['keywords']['real_keywords_found']
+                          else "None found ⚠️")
+                    )
+
+                # Sentiment details
+                st.markdown("---")
+                st.subheader("💬 Sentiment Analysis")
+                col1, col2, col3 = st.columns(3)
+                with col1:
+                    st.metric(
+                        "Sentiment",
+                        results["sentiment"]["sentiment_label"]
+                    )
+                with col2:
+                    st.metric(
+                        "Polarity",
+                        results["sentiment"]["polarity"]
+                    )
+                with col3:
+                    st.metric(
+                        "Subjectivity",
+                        results["sentiment"]["subjectivity"]
+                    )
+                    
 # ===== MODEL RESULTS PAGE =====
 elif page == "📊 Model Results":
     st.title("📊 Model Comparison Results")
