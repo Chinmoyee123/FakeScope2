@@ -9,8 +9,6 @@ data/True.csv
 data/cleaned_data.csv
 data/sentiment_data.csv
 
-# Model files
-models/*.pkl
 
 # Environment
 .env
