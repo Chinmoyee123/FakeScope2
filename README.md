@@ -1,6 +1,9 @@
 # FakeScope 2.0 🔍
 ### Advanced Fake News Detection using Hybrid AI
 
+## 🌐 Live Demo
+👉 **[Click Here to Open FakeScope 2.0](https://fakescope2.streamlit.app/)**
+
 ![Python](https://img.shields.io/badge/Python-3.11-blue)
 ![Streamlit](https://img.shields.io/badge/Streamlit-Latest-red)
 ![ML](https://img.shields.io/badge/ML-Scikit--learn-green)

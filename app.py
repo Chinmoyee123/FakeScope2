@@ -652,6 +652,8 @@ elif page == "👥 About":
     - **Type:** Major Project
     - **Domain:** Natural Language Processing
     - **Topic:** Sentiment Analysis on Fake News Detection
+    - **Live App:** https://fakescope2.streamlit.app/
+    
 
     ---
 
