@@ -593,43 +593,37 @@ elif page == "📖 How It Works":
 
     FakeScope 2.0 uses 4 components to detect fake news:
 
-    ---
-
-    #### 1. 🤖 Machine Learning Model (35% weight)
+    1. 🤖 Machine Learning Model (35% weight)
     - Text cleaned and preprocessed
     - TF-IDF converts text to numbers
     - Logistic Regression predicts Real/Fake
     - Trained on 44,000+ news articles
 
-    ---
 
-    #### 2. 💬 Sentiment Analysis (20% weight)
+    2. 💬 Sentiment Analysis (20% weight)
     - Polarity score calculated (-1 to +1)
     - Subjectivity score calculated (0 to 1)
     - Real news tends to be neutral and objective
     - Fake news tends to be extreme and subjective
 
-    ---
 
-    #### 3. 🔑 Keyword Detection (25% weight)
+    3. 🔑 Keyword Detection (25% weight)
     - Checks for fake news trigger words
     - Checks for credible news indicator words
     - Examples of fake words: conspiracy, hoax, miracle cure
     - Examples of real words: according to, confirmed by, reuters
 
-    ---
 
-    #### 4. ✍️ Writing Style Analysis (20% weight)
+    4. ✍️ Writing Style Analysis (20% weight)
     - Counts CAPS words
     - Counts exclamation marks
     - Checks sentence length
     - Checks article length
     - Real news tends to be formal and detailed
 
-    ---
 
-    ### Final Score Calculation
-```
+    Final Score Calculation
+
     Hybrid Score =
         ML Score × 25% +
         Sentiment Score × 15% +
@@ -638,7 +632,7 @@ elif page == "📖 How It Works":
 
     If Hybrid Score >= 50 → REAL NEWS
     If Hybrid Score < 50  → FAKE NEWS
-```
+
     """)
 
 # ===== ABOUT PAGE =====
@@ -663,7 +657,7 @@ elif page == "👥 About":
     - **ML Library:** Scikit-learn
     - **NLP:** NLTK, TextBlob
     - **Visualization:** Plotly
-    - **Dataset:** Bisaillon Fake News Dataset (44,898 articles)
+    - **Dataset:** Fake News Detection Dataset (44,919 articles)
 
     ---
 

@@ -43,7 +43,7 @@ fake news with high accuracy.
 - **OCR:** Tesseract, Pytesseract
 - **Image Processing:** Pillow
 - **Visualization:** Plotly
-- **Dataset:** Bisaillon Fake News Dataset
+- **Dataset:** Fake News Detection Dataset
 
 ---
 
